@@ -33,7 +33,6 @@
                                 type="text" value="" name="cedulaE" class ="form-control"  >
                         <input class="form-primary" type="submit" value="Buscar" name="accion">
                         <input class="form-primary" type="submit" value="Cancelar" name="accion">
-                        
                     </form>
                 </div>
 
@@ -50,9 +49,12 @@
                             <%
 
                                 Cliente cliente = new Cliente();
+                                String cedula = request.getParameter("cedulaE");
                                 
-                       
-                                    JSONObject res = cliente.getJSON("http://34.133.153.173/pruebaservicios/models/select.php");
+                                     RequestBody requestBody= new FormBody.Builder()
+                    .add("cedula", cedula).build()
+                    ;
+                                    JSONObject res = cliente.postJSON("http://34.133.153.173/pruebaservicios/models/buscar.php", requestBody);
                                     JSONArray estudiantes = (JSONArray) res.get("estudiantes");
                                     for (int i = 0; i < estudiantes.length(); i++) {
                                         JSONObject estu = (JSONObject) estudiantes.get(i);
@@ -74,6 +76,7 @@
 
 
                             </tr>
+                           
                             <% 
                                 }%>
                         </tbody>

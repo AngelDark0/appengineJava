@@ -25,6 +25,7 @@ public class Controlador extends HttpServlet {
     String agregar="agregar.jsp";
     String editar="editar.jsp";
     String index="index.jsp";
+    String buscar="buscar.jsp";
     
     Cliente cliente= new Cliente();
 
@@ -98,7 +99,17 @@ public class Controlador extends HttpServlet {
                     ;
             cliente.postJSON("http://34.133.153.173/pruebaservicios/models/editar.php", requestBody);
             request.getRequestDispatcher(inicio).forward(request, response);
-        }else if(accion.equals("eliminar")){
+        } else if(accion.equals("Buscar")){
+            String cedula1=request.getParameter("cedulaE");
+            
+            request.setAttribute("cedulaE", cedula1);
+            request.getRequestDispatcher(buscar).forward(request, response);
+        }else if(accion.equals("Cancelar")){
+            
+            request.getRequestDispatcher(inicio).forward(request, response);
+        }
+        
+        else if(accion.equals("eliminar")){
             String cedula =request.getParameter("cedula");
             RequestBody requestBody = new FormBody.Builder()
                 .add("est_cedula", cedula).build();
@@ -110,6 +121,7 @@ public class Controlador extends HttpServlet {
             request.getRequestDispatcher(index).forward(request, response);
         
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
